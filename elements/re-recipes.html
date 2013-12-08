@@ -1,14 +1,14 @@
 <!-- <link rel="import" href="../components/polymer-ui-scaffold/polymer-ui-scaffold.html"> -->
-<!-- <link rel="import" href="re-fridge-model.html"> -->
+<link rel="import" href="re-recipe.html">
 
 <polymer-element name="re-recipes" attributes="fridge">
   <template>
     <link rel="stylesheet" href="css/re-recipes.css">
 
-    <re-search-request url="/api/recipes" query="{{query}}" results="{{recipes}}">
+    <re-search-request url="/api/recipes.json" query="{{query}}" results="{{recipes}}"></re-search-request>
 
     <template repeat="{{recipe in recipes}}">
-      <re-recipe recipe="{{recipe}}"></re-recipe>
+      <re-recipe recipe="{{recipe}}" fridge="{{fridge}}"></re-recipe>
     </template>
 
   </template>

@@ -1,0 +1,57 @@
+<link rel="import" href="../components/polymer-ui-card/polymer-ui-card.html">
+<link rel="import" href="../components/polymer-flex-layout/polymer-flex-layout.html">
+<link rel="import" href="re-time.html">
+
+<polymer-element name="re-recipe" attributes="recipe fridge">
+  <template>
+    <link rel="stylesheet" href="css/re-recipe.css">
+
+    <polymer-ui-card>
+      <header>{{recipe.name}}</header>
+
+      <section class="times">
+        <polymer-flex-layout></polymer-flex-layout>
+        <re-time flex name="Preparation" minutes="{{recipe.prep_time}}"></re-time>
+        <re-time flex name="Cooking" minutes="{{recipe.cook_time}}"></re-time>
+        <re-time flex name="Ready" minutes="{{recipe.ready_time}}"></re-time>
+      </section>
+
+      <section class="ingredients">
+        <template repeat="{{needIngredients}}">
+          <div>{{name}} ({{amount}} {{amountUnits}})</div>
+        </template>
+        <template repeat="{{haveIngredients}}">
+          <div class="strikethrough">{{name}} ({{amount}} {{amountUnits}})</div>
+        </template>
+      </section>
+
+    </polymer-ui-card>
+
+  </template>
+  <script>
+    (function() {
+      Polymer("re-recipe", {
+        needIngredients: [],
+        haveIngredients: [],
+        ready: function() {
+
+        },
+        enteredView: function() {
+          this.fridge.addEventListener("changed", this.updateIngredients.bind(this));
+          this.updateIngredients();
+        },
+        updateIngredients: function() {
+          this.needIngredients = [];
+          this.haveIngredients = [];
+          this.recipe.ingredients.forEach(function(ingr) {
+            if(this.fridge.hasIngredient(ingr)) {
+              this.haveIngredients.push(ingr);
+            } else {
+              this.needIngredients.push(ingr);
+            }
+          }.bind(this));
+        }
+      });
+    })();
+  </script>
+</polymer-element>

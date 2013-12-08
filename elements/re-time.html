@@ -1,0 +1,32 @@
+<polymer-element name="re-time" attributes="minutes name">
+  <template>
+    <link rel="stylesheet" href="css/re-time.css">
+
+    <div class="minutes">{{minutes}}</div>
+    <div class="name">{{name}}</div>
+
+  </template>
+  <script>
+    (function() {
+      Polymer("re-time", {
+        easy: 30,
+        medium: 60,
+        ready: function() {
+
+        },
+        enteredView: function() {
+
+        },
+        minutesChanged: function(oldMinutes, newMinutes) {
+          if(newMinutes < this.easy) {
+
+          } else if(newMinutes < this.medium) {
+
+          } else {
+
+          }
+        }
+      });
+    })();
+  </script>
+</polymer-element>

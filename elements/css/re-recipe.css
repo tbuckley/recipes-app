@@ -1,0 +1,32 @@
+@host {
+  :scope {
+
+  }
+}
+
+polymer-ui-card {
+  display: block;
+  width: 400px;
+}
+
+header {
+  padding: 16px 16px 8px 16px;
+  border-bottom: 1px solid #eeeeee;
+  font-size: 21px;
+  font-weight: 300;
+  color: #707070;
+}
+
+.times {
+  padding: 8px 16px;
+  background-color: #f8f8f8;
+}
+
+.ingredients {
+  padding: 8px 16px 16px 16px;
+}
+
+.strikethrough {
+  color: #8d8d8d;
+  text-decoration: line-through;
+}
