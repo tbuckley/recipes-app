@@ -5,7 +5,7 @@
   <template>
     <link rel="stylesheet" href="css/re-recipes.css">
 
-    <re-search-request url="/api/recipes.json" query="{{query}}" results="{{recipes}}"></re-search-request>
+    <re-search-request url="/api/recipes" query="{{query}}" results="{{recipes}}"></re-search-request>
 
     <template repeat="{{recipe in recipes}}">
       <re-recipe recipe="{{recipe}}" fridge="{{fridge}}"></re-recipe>
