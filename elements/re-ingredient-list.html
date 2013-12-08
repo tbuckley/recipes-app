@@ -1,0 +1,33 @@
+<!-- <link rel="import" href="../components/polymer-ui-scaffold/polymer-ui-scaffold.html"> -->
+<link rel="import" href="re-ingredient.html">
+
+<polymer-element name="re-ingredient-list" attributes="ingredients actionicon fridge">
+  <template>
+    <link rel="stylesheet" href="css/re-ingredient-list.css">
+
+    <template repeat="{{ingredient in ingredients}}">
+      <re-ingredient ingredient="{{ingredient}}"
+          actionicon="{{actionicon}}"
+          on-action="{{actionHandler}}"
+          fridge="{{fridge}}">
+      </re-ingredient>
+    </template>
+
+  </template>
+  <script>
+    (function() {
+      Polymer("re-ingredient-list", {
+        ready: function() {
+
+        },
+        enteredView: function() {
+
+        },
+        actionHandler: function(event, detail, sender) {
+          event.stopPropagation();
+          this.fire("action", sender.templateInstance.model.ingredient);
+        }
+      });
+    })();
+  </script>
+</polymer-element>

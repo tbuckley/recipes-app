@@ -1,0 +1,37 @@
+<!-- <link rel="import" href="../components/polymer-ui-scaffold/polymer-ui-scaffold.html"> -->
+<!-- <link rel="import" href="re-fridge-model.html"> -->
+
+<polymer-element name="re-recipes" attributes="fridge">
+  <template>
+    <link rel="stylesheet" href="css/re-recipes.css">
+
+    <re-search-request url="/api/recipes" query="{{query}}" results="{{recipes}}">
+
+    <template repeat="{{recipe in recipes}}">
+      <re-recipe recipe="{{recipe}}"></re-recipe>
+    </template>
+
+  </template>
+  <script>
+    (function() {
+      Polymer("re-recipes", {
+        query: {},
+        ready: function() {
+
+        },
+        enteredView: function() {
+          this.fridge.addEventListener("changed", this.searchRecipes.bind(this));
+        },
+        searchRecipes: function() {
+          var ids = this.fridge.ingredients.map(function(ingr) {
+            return ingr.id;
+          });
+          console.log("Searching: ", ids);
+          this.query = {
+            contains: ids
+          };
+        }
+      });
+    })();
+  </script>
+</polymer-element>

@@ -1,0 +1,39 @@
+<polymer-element name="re-fridge-model" attributes="ingredients">
+  <script>
+    (function() {
+      var DEFAULT_INGREDIENTS = [
+        {"name": "Chicken", "amount": "2", "amountUnits": "oz", "id": 5},
+        {"name": "Eggs", "amount": "4", "amountUnits": "units", "id": 6}
+      ];
+
+      Polymer("re-fridge-model", {
+        ready: function() {
+          this.load();
+        },
+        load: function() {
+          this.ingredients = [];
+          this.ingredientsSet = {};
+          DEFAULT_INGREDIENTS.forEach(function(ingredient) {
+            this.addIngredient(ingredient);
+          }.bind(this));
+        },
+        addIngredient: function(ingredient) {
+          this.ingredientsSet[ingredient.id] = this.ingredients.length;
+          this.ingredients.push(ingredient);
+          this.fire("changed");
+        },
+        removeIngredient: function(ingredient) {
+          var index = this.ingredientsSet[ingredient.id];
+          if(index !== undefined) {
+            this.ingredients.splice(index, 1);
+            delete this.ingredientsSet[ingredient.id];
+            this.fire("changed");
+          }
+        },
+        hasIngredient: function(ingredient) {
+          return (ingredient.id in this.ingredientsSet);
+        }
+      });
+    })();
+  </script>
+</polymer-element>

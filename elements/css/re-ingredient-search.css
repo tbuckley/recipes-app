@@ -1,0 +1,25 @@
+@host {
+  :scope {
+    position: relative;
+    display: block;
+    height: 54px;
+  }
+}
+
+polymer-ui-field {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: block;
+
+  height: 53px;
+  border-bottom: 1px solid #ddd;
+  /*box-shadow: 0 0 5px rgba(0,0,0,.6);*/
+  background-color: #FFF;
+}
+
+polymer-ui-field input {
+  padding: 18px 0;
+}

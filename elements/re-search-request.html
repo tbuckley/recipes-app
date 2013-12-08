@@ -1,0 +1,45 @@
+<link rel="import" href="../components/polymer-ajax/polymer-ajax.html">
+
+<polymer-element name="re-search-request" attributes="url query results waiting error">
+  <template>
+    <polymer-ajax id="ajaxQuery"
+        url="{{url}}"
+        params="{{query}}"
+        handleAs="json"
+        on-polymer-response="{{handleResponse}}">
+    </polymer-ajax>
+  </template>
+  <script>
+    (function() {
+      Polymer("re-search-request", {
+        error: null,
+        waiting: false,
+        results: [],
+        ready: function() {
+
+        },
+        enteredView: function() {
+
+        },
+        urlChanged: function(oldValue, newValue) {
+
+        },
+        queryChanged: function(oldValue, newValue) {
+          console.log(this.query, oldValue, newValue);
+          this.waiting = true;
+          this.$.ajaxQuery.go();
+        },
+        handleResponse: function(event, xhr) {
+          if(xhr.response.error) {
+            this.error = xhr.response.error;
+            this.results = [];
+          } else {
+            this.error = null;
+            this.results = xhr.response.data;
+          }
+          this.waiting = false;
+        }
+      });
+    })();
+  </script>
+</polymer-element>

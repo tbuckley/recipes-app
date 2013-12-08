@@ -1,0 +1,49 @@
+@host {
+  :scope {
+    width: 300px;
+    border-right: 1px solid #CCC;
+    overflow: hidden;
+  }
+}
+
+h2 {
+  margin: 0;
+  font-size: 18px;
+  padding: 10px 0;
+  color: #333;
+}
+
+header {
+  margin: 0 8px;
+  padding: 6px 0 6px 8px;
+  border-bottom: 1px solid #CCC;
+}
+
+#search {
+  background-color: #f2f2f2;
+}
+
+.ingredient-list {
+  overflow: scroll;
+  padding: 16px;
+}
+
+/* Overlay */
+
+polymer-ui-overlay > div {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  overflow: hidden;
+  background: white;
+  padding:30px 42px;
+  outline: 1px solid rgba(0,0,0,0.2);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+
+#backdrop {
+  visibility: visible;
+}

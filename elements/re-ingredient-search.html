@@ -1,0 +1,51 @@
+<link rel="import" href="../components/polymer-ui-field/polymer-ui-field.html">
+<link rel="import" href="../components/polymer-ui-icon/polymer-ui-icon.html">
+<link rel="import" href="re-search-request.html">
+
+<polymer-element name="re-ingredient-search" attributes="results">
+  <template>
+    <link rel="stylesheet" href="css/re-ingredient-search.css">
+
+    <re-search-request url="/search-test.json"
+        query="{{searchQuery}}"
+        handleAs="json"
+        results="{{results}}">
+    </re-search-request>
+
+    <polymer-ui-field>
+      <polymer-ui-icon icon="search"></polymer-ui-icon>
+      <input id="ingredientSearch" type="text" placeholder="add ingredient" value="{{query}}"
+          on-keyup="{{doQuery}}" flex />
+      <polymer-ui-icon icon="close" on-tap="{{cancel}}"></polymer-ui-icon>
+    </polymer-ui-field>
+  </template>
+  <script>
+    (function() {
+      Polymer("re-ingredient-search", {
+        results: [],
+        searchQuery: {},
+        ready: function() {
+
+        },
+        enteredView: function() {
+
+        },
+        focus: function() {
+          this.$.ingredientSearch.focus();
+        },
+        cancel: function() {
+          this.$.ingredientSearch.value = "";
+          this.$.ingredientSearch.blur();
+          this.fire("cancel");
+        },
+        doQuery: function() {
+          this.searchQuery = {
+            q: this.$.ingredientSearch.value,
+            cursor: this.$.ingredientSearch.selectionStart
+          };
+          console.log("searchQuery", this.searchQuery);
+        }
+      });
+    })();
+  </script>
+</polymer-element>

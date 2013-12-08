@@ -1,0 +1,40 @@
+@host {
+   :scope {
+      display: block;
+    }
+ }
+
+polymer-ui-card {
+   display: block;
+   width: 100%;
+   height: 64px;
+   margin-bottom: 16px;
+   overflow: hidden;
+}
+polymer-ui-card[fridge] {
+   opacity: .5;
+}
+
+.image {
+   width: 64px;
+   height: 64px;
+   background-color: #333;
+}
+
+.info {
+   padding-left: 8px;
+}
+.name {
+   font-size: 18px;
+   font-weight: 200;
+   color: #707070;
+}
+.amount {
+   font-size: 14px;
+   color: #b5b5b5;
+}
+.action {
+   border-left: 1px solid #e5e5e5;
+   margin: 8px 0;
+   padding: 12px 4px;
+}

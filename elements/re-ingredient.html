@@ -1,0 +1,50 @@
+<link rel="import" href="../components/polymer-flex-layout/polymer-flex-layout.html">
+<link rel="import" href="../components/polymer-ui-card/polymer-ui-card.html">
+<link rel="import" href="../components/polymer-ui-icon/polymer-ui-icon.html">
+
+<polymer-element name="re-ingredient" attributes="ingredient fridge actionicon">
+  <template>
+    <link rel="stylesheet" href="css/re-ingredient.css">
+    <polymer-ui-card fridge?="{{inFridge}}">
+      <polymer-flex-layout></polymer-flex-layout>
+      <div class="image"></div>
+      <section class="info" flex>
+        <polymer-flex-layout vertical></polymer-flex-layout>
+        <div flex></div>
+        <div class="name">{{ingredient.name}}</div>
+        <div class="amount">{{ingredient.amount}} {{ingredient.amountUnits}}</div>
+        <div flex></div>
+      </section>
+      <section class="action">
+        <polymer-ui-icon icon="{{actionicon}}" on-tap="{{actionHandler}}"></polymer-ui-icon>
+      </section>
+    </polymer-ui-card>
+  </template>
+  <script>
+    (function() {
+      Polymer("re-ingredient", {
+        actionicon: "settings",
+        inFridge: false,
+        ready: function() {
+
+        },
+        enteredView: function() {
+          if(this.fridge) {
+            this.fridge.addEventListener("changed", this.checkInFridge.bind(this));
+            this.checkInFridge();
+          }
+        },
+        actionHandler: function() {
+          this.fire("action");
+        },
+        checkInFridge: function() {
+          if(this.fridge.hasIngredient(this.ingredient)) {
+            this.inFridge = true;
+          } else {
+            this.inFridge = false;
+          }
+        }
+      });
+    })();
+  </script>
+</polymer-element>

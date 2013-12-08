@@ -1,0 +1,90 @@
+<link rel="import" href="../components/polymer-flex-layout/polymer-flex-layout.html">
+<link rel="import" href="../components/polymer-ui-pages/polymer-ui-pages.html">
+<link rel="import" href="../components/polymer-ui-icon-button/polymer-ui-icon-button.html">
+<link rel="import" href="../components/polymer-ui-overlay/polymer-ui-overlay.html">
+<link rel="import" href="../components/polymer-ui-field/polymer-ui-field.html">
+<link rel="import" href="../components/polymer-grid-layout/polymer-grid-layout.html">
+<link rel="import" href="re-ingredient.html">
+<link rel="import" href="re-ingredient-search.html">
+<link rel="import" href="re-ingredient-list.html">
+
+<polymer-element name="re-fridge" attributes="fridge">
+  <template>
+    <link rel="stylesheet" href="css/re-fridge.css">
+
+    <polymer-grid-layout layout="{{layout}}"></polymer-grid-layout>
+
+    <div id="fridge" offscreen="basement">
+      <polymer-flex-layout vertical></polymer-flex-layout>
+
+      <header>
+        <polymer-flex-layout></polymer-flex-layout>
+        <h2 flex>Fridge</h2>
+        <polymer-ui-icon-button icon="search" theme="polymer-ui-dark-icon" on-tap="{{showSearch}}"></polymer-ui-icon-button>
+      </header>
+
+      <section class="ingredient-list" flex>
+        <re-ingredient-list flex ingredients="{{fridge.ingredients}}"
+            actionicon="settings"
+            on-action="{{editIngredient}}">
+        </re-ingredient-list>
+      </section>
+
+      <polymer-ui-overlay id="editor" backdrop>
+        <div>Test</div>
+      </polymer-ui-overlay>
+    </div>
+
+    <div id="search" offscreen="right">
+      <polymer-flex-layout vertical></polymer-flex-layout>
+
+      <re-ingredient-search id="search" results="{{searchResults}}" on-cancel="{{cancelSearch}}"></re-ingredient-search>
+
+      <section class="ingredient-list" flex>
+        <re-ingredient-list ingredients="{{searchResults}}"
+            actionicon="plus"
+            on-action="{{addIngredient}}"
+            fridge="{{fridge}}">
+        </re-ingredient-list>
+      </section>
+    </section>
+
+  </template>
+  <script>
+    (function() {
+      Polymer("re-fridge", {
+        mode: "fridge",
+        layouts: {
+          "fridge": [[1]],
+          "search": [[2]]
+        },
+        layout: null,
+        ready: function() {
+          this.layout = this.layouts[this.mode];
+        },
+        enteredView: function() {
+
+        },
+        screenSizeChange: function() {
+
+        },
+        showSearch: function() {
+          this.mode = "search";
+          this.layout = this.layouts[this.mode];
+          this.$.search.focus();
+          console.log("focus");
+        },
+        cancelSearch: function() {
+          this.mode = "fridge";
+          this.layout = this.layouts[this.mode];
+        },
+        addIngredient: function(event, detail, sender) {
+          this.fridge.addIngredient(detail);
+        },
+        editIngredient: function(event, detail, sender) {
+          this.$.editor.toggle();
+        }
+      });
+    })();
+  </script>
+</polymer-element>
