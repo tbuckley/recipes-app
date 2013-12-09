@@ -1,6 +1,7 @@
 @host {
   :scope {
     padding: 16px;
+    overflow: scroll;
   }
 }
 
