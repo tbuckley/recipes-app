@@ -19,6 +19,7 @@ polymer-ui-card[fridge] {
    width: 64px;
    height: 64px;
    background-color: #333;
+   border-right: 1px solid #e5e5e5;
 }
 
 .info {

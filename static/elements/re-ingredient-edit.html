@@ -55,7 +55,7 @@
           this.fire("delete");
         },
         save: function() {
-          this.ingredient.amount = parseInt(this.$.amount.value, 10);
+          this.ingredient.amount = parseFloat(this.$.amount.value);
           this.ingredient.units = this.$.units.value;
           this.fire("save");
         }

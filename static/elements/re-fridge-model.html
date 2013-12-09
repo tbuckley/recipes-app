@@ -11,18 +11,30 @@
           if("localStorage" in window && window.localStorage !== null) {
             var ids = window.localStorage.getItem("ingredients");
             ids = JSON.parse(ids);
+            console.log("IDs:", ids);
 
             if(ids === null) {
               return;
             }
 
             var that = this;
-            ids.forEach(function(ingrID) {
+            var tempList = [], ctr = 0;
+            var done = function(ingr, index) {
+              tempList[index] = ingr;
+              ctr += 1;
+              if(ctr == ids.length) {
+                for(var i = 0; i < tempList.length; i++) {
+                  that.addIngredient(tempList[i]);
+                }
+              }
+            };
+
+            ids.forEach(function(ingrID, index) {
               var ajax = document.createElement("polymer-ajax");
               ajax.url = "/api/ingredients/"+ingrID;
               ajax.handleAs = "json";
               ajax.addEventListener("polymer-response", function(e) {
-                that.addIngredient(e.detail.response.data);
+                done(e.detail.response.data, index);
               });
               ajax.go();
             });

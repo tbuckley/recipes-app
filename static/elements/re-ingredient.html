@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="css/re-ingredient.css">
     <polymer-ui-card fridge?="{{inFridge}}">
       <polymer-flex-layout></polymer-flex-layout>
-      <div class="image"></div>
+      <div class="image">
+        <img src="{{imgURL}}">
+      </div>
       <section class="info" flex>
         <polymer-flex-layout vertical></polymer-flex-layout>
         <div flex></div>
@@ -33,6 +35,7 @@
             this.fridge.addEventListener("changed", this.checkInFridge.bind(this));
             this.checkInFridge();
           }
+          this.imgURL = "https://usercontent.googleapis.com/freebase/v1/image"+this.ingredient.id+"?maxwidth=64&maxheight=64&mode=fillcropmid";
         },
         actionHandler: function() {
           this.fire("action");
