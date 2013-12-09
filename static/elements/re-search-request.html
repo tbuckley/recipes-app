@@ -30,7 +30,6 @@
           this.$.ajaxQuery.go();
         },
         handleResponse: function(event, xhr) {
-          console.log(xhr.response);
           if(xhr.response.error) {
             this.error = xhr.response.error;
             this.results = [];

@@ -7,6 +7,7 @@
 <link rel="import" href="re-ingredient.html">
 <link rel="import" href="re-ingredient-search.html">
 <link rel="import" href="re-ingredient-list.html">
+<link rel="import" href="re-ingredient-edit.html">
 
 <polymer-element name="re-fridge" attributes="fridge">
   <template>
@@ -29,10 +30,6 @@
             on-action="{{editIngredient}}">
         </re-ingredient-list>
       </section>
-
-      <polymer-ui-overlay id="editor" backdrop>
-        <div>Test</div>
-      </polymer-ui-overlay>
     </div>
 
     <div id="search" offscreen="right">
@@ -59,6 +56,7 @@
           "search": [[2]]
         },
         layout: null,
+        selectedIngredient: null,
         ready: function() {
           this.layout = this.layouts[this.mode];
         },
@@ -82,7 +80,8 @@
           this.fridge.addIngredient(detail);
         },
         editIngredient: function(event, detail, sender) {
-          this.$.editor.toggle();
+          event.stopPropagation();
+          this.fire("edit", detail);
         }
       });
     })();

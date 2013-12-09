@@ -1,0 +1,83 @@
+@host {
+  :scope {
+    width: 400px;
+    display: block;
+  }
+}
+
+header {
+  padding-bottom: 16px;
+}
+header h1 {
+  font-size: 21px;
+  font-weight: 300;
+  color: #707070;
+  margin: 0;
+  padding: 0;
+}
+
+polymer-ui-field {
+  border: 1px solid rgba(0,0,0,.2);
+  border-bottom: 1px solid rgba(0,0,0,.3);
+  box-shadow: 0 1px 0 rgba(0,0,0,.15);
+}
+
+label {
+  padding: 14px 8px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #999;
+  display: block;
+}
+polymer-ui-field > input {
+  padding: 8px;
+  margin: 0;
+}
+
+
+button {
+  height: 32px;
+  padding: 8px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  border: 1px solid rgba(0,0,0,.1);
+  border-radius: 2px;
+}
+button:active {
+
+}
+button:hover {
+  box-shadow: 0 1px 0 rgba(0,0,0,.3), 0 0 1px rgba(0,0,0,.1);
+}
+
+button.blue {
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #4287fd), color-stop(1, #4683EA));
+  color: #FFF;
+}
+button.gray {
+  background-color: #CCC;
+  color: #333;
+}
+button.red {
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #E04A3F), color-stop(1, #CD372D));
+  color: #FFF;
+}
+
+
+.buttons {
+  padding-top: 10px;
+}
+
+[grouped] polymer-ui-field {
+  box-shadow: none;
+  border-bottom: none;
+}
+[grouped] polymer-ui-field:last-child {
+  border-bottom: 1px solid rgba(0,0,0,.3);
+  box-shadow: 0 1px 0 rgba(0,0,0,.15);
+}
+[grouped] {
+  padding-bottom: 10px;
+}

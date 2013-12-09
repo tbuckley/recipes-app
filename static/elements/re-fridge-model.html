@@ -1,8 +1,6 @@
 <polymer-element name="re-fridge-model" attributes="ingredients">
   <script>
     (function() {
-      var DEFAULT_INGREDIENTS = [];
-
       Polymer("re-fridge-model", {
         ready: function() {
           this.load();
@@ -10,22 +8,49 @@
         load: function() {
           this.ingredients = [];
           this.ingredientsSet = {};
-          DEFAULT_INGREDIENTS.forEach(function(ingredient) {
-            this.addIngredient(ingredient);
-          }.bind(this));
+          if("localStorage" in window && window.localStorage !== null) {
+            var ids = window.localStorage.getItem("ingredients");
+            ids = JSON.parse(ids);
+
+            if(ids === null) {
+              return;
+            }
+
+            var that = this;
+            ids.forEach(function(ingrID) {
+              var ajax = document.createElement("polymer-ajax");
+              ajax.url = "/api/ingredients/"+ingrID;
+              ajax.handleAs = "json";
+              ajax.addEventListener("polymer-response", function(e) {
+                that.addIngredient(e.detail.response.data);
+              });
+              ajax.go();
+            });
+          }
+        },
+        save: function() {
+          var ids = this.ingredients.map(function(ingr) {
+            return ingr.id;
+          });
+          if("localStorage" in window && window.localStorage !== null) {
+            window.localStorage.setItem("ingredients", JSON.stringify(ids));
+          }
         },
         addIngredient: function(ingredient) {
           this.ingredientsSet[ingredient.id] = this.ingredients.length;
           this.ingredients.push(ingredient);
           this.fire("changed");
+          this.save();
         },
         removeIngredient: function(ingredient) {
           var index = this.ingredientsSet[ingredient.id];
+          console.log(ingredient, index);
           if(index !== undefined) {
             this.ingredients.splice(index, 1);
             delete this.ingredientsSet[ingredient.id];
             this.fire("changed");
           }
+          this.save();
         },
         hasIngredient: function(ingredient) {
           return (ingredient.id in this.ingredientsSet);

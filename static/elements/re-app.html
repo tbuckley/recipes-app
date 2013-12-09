@@ -8,13 +8,29 @@
 <polymer-element name="re-app">
   <template>
     <link rel="stylesheet" href="css/re-app.css">
-    <polymer-grid-layout layout="{{layout}}"></polymer-grid-layout>
-    <polymer-ui-toolbar class="re-style-blue">
-      <div>{{toolbarLabel}}</div>
-    </polymer-ui-toolbar>
-    <re-fridge fridge="{{$.fridgeModel}}"></re-fridge>
-    <re-recipes fridge="{{$.fridgeModel}}"></re-recipes>
-    <re-fridge-model id="fridgeModel"></re-fridge-model>
+
+    <div>
+      <polymer-grid-layout layout="{{layout}}"></polymer-grid-layout>
+      <polymer-ui-toolbar class="re-style-blue">
+        <div>{{toolbarLabel}}</div>
+      </polymer-ui-toolbar>
+      <re-recipes fridge="{{$.fridgeModel}}"></re-recipes>
+      <re-fridge fridge="{{$.fridgeModel}}" on-edit="{{editHandler}}"></re-fridge>
+      <re-fridge-model id="fridgeModel"></re-fridge-model>
+    </div>
+
+    <polymer-ui-overlay id="editor" backdrop>
+      <div>
+        <template if="{{selectedIngredient}}">
+          <re-ingredient-edit ingredient="{{selectedIngredient}}" fridge="{{$.fridgeModel}}"
+              on-cancel="{{closeEdit}}"
+              on-save="{{closeEdit}}"
+              on-delete="{{closeEdit}}">
+          </re-ingredient-edit>
+        </template>
+      </div>
+    </polymer-ui-overlay>
+
   </template>
   <script>
     (function() {
@@ -24,8 +40,8 @@
         toolbarLabel: "Personal Chef",
         layout: [
           [1,1,1],
-          [2,3,3],
-          [2,3,3]
+          [3,2,2],
+          [3,2,2]
         ],
         ready: function() {
 
@@ -38,6 +54,13 @@
         },
         keyupHandler: function(e) {
           if(e.keyCode == ESCAPE_KEY) {}
+        },
+        editHandler: function(event, detail, sender) {
+          this.selectedIngredient = detail;
+          this.$.editor.toggle();
+        },
+        closeEdit: function(event, detail, sender) {
+          this.$.editor.toggle();
         }
       });
     })();

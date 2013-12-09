@@ -1,0 +1,65 @@
+<link rel="import" href="../components/polymer-flex-layout/polymer-flex-layout.html">
+<link rel="import" href="../components/polymer-ui-field/polymer-ui-field.html">
+<!-- <link rel="import" href="re-ingredient.html"> -->
+
+<polymer-element name="re-ingredient-edit" attributes="ingredient fridge">
+  <template>
+    <link rel="stylesheet" href="css/re-ingredient-edit.css">
+
+    <header>
+      <polymer-flex-layout></polymer-flex-layout>
+      <h1>{{ingredient.name}}</h1>
+      <div flex></div>
+      <button class="red" on-tap="{{delete}}">Delete</button>
+    </header>
+
+    <label for="amount">Amount</label>
+    <div grouped>
+      <polymer-ui-field>
+        <input id="amount" type="text" placeholder="amount" value="{{amount}}" flex />
+      </polymer-ui-field>
+      <polymer-ui-field>
+        <input id="units" type="text" placeholder="units" value="{{units}}" flex />
+      </polymer-ui-field>
+    </div>
+
+    <div class="buttons">
+      <polymer-flex-layout></polymer-flex-layout>
+      <button class="blue" on-tap="{{save}}" flex>Save</button>
+      <div style="width: 8px;"></div>
+      <button class="gray" on-tap="{{cancel}}" flex>Cancel</button>
+    </div>
+
+
+  </template>
+  <script>
+    (function() {
+      Polymer("re-ingredient-edit", {
+        amount: null,
+        units: null,
+        ready: function() {
+
+        },
+        enteredView: function() {
+
+        },
+        ingredientChanged: function(oldIngr, newIngr) {
+          this.amount = newIngr.amount;
+          this.units = newIngr.units;
+        },
+        cancel: function() {
+          this.fire("cancel");
+        },
+        delete: function() {
+          this.fridge.removeIngredient(this.ingredient);
+          this.fire("delete");
+        },
+        save: function() {
+          this.ingredient.amount = parseInt(this.$.amount.value, 10);
+          this.ingredient.units = this.$.units.value;
+          this.fire("save");
+        }
+      });
+    })();
+  </script>
+</polymer-element>
