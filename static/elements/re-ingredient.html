@@ -35,7 +35,7 @@
             this.fridge.addEventListener("changed", this.checkInFridge.bind(this));
             this.checkInFridge();
           }
-          this.imgURL = "https://usercontent.googleapis.com/freebase/v1/image"+this.ingredient.id+"?maxwidth=64&maxheight=64&mode=fillcropmid";
+          this.imgURL = "https://usercontent.googleapis.com/freebase/v1/image/"+this.ingredient.id+"?maxwidth=64&maxheight=64&mode=fillcropmid";
         },
         actionHandler: function() {
           this.fire("action");

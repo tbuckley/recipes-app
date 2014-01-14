@@ -38,6 +38,7 @@
             this.results = xhr.response.data;
           }
           this.waiting = false;
+          this.fire("response", xhr.response);
         }
       });
     })();

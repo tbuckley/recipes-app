@@ -48,6 +48,9 @@ polymer-ui-toolbar.re-style-blue {
       background: #427fed none;
       color: #fff;
 }
+polymer-ui-toolbar {
+  padding-left: 16px;
+}
 
 /* Overlay */
 

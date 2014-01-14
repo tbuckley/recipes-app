@@ -1,0 +1,71 @@
+<polymer-element name="re-waterfall-layout" attributes="nodes auto columns">
+  <template>
+  </template>
+  <script>
+    (function() {
+      Polymer("re-waterfall-layout", {
+        columns: 2,
+        ready: function() {
+
+        },
+        autoNodes: function() {
+          this.nodes = this.parentNode.children.array().filter(
+            function(node) {
+              switch(node.localName) {
+                case 'polymer-waterfall-layout':
+                case 'style':
+                case 'template':
+                  return false;
+              }
+              return true;
+            }
+          );
+        },
+        relayout: function() {
+          // if(!this.nodes || this.auto) {
+            this.autoNodes();
+          // }
+          layout(this.nodes, this.columns, this.parentNode);
+          this.asyncFire('re-waterfall-layout');
+        }
+      });
+
+      function minColumn(columns) {
+        var min = 0,
+            minValue = columns[0];
+        for(var i = 1; i < columns.length; i++) {
+          if(columns[i] < minValue) {
+            min = i;
+            minValue = columns[i];
+          }
+        }
+        return min;
+      }
+
+      function layout(nodes, columns, parentNode) {
+        var cols = new Array(columns);
+        for(var i = 0; i < cols.length; i++) {
+          cols[i] = 0;
+        }
+        var padding = 16;
+        var width = parentNode.offsetWidth,
+            colWidth = Math.floor((width - (padding * (columns - 1))) / columns);
+
+        nodes.forEach(function(node, i) {
+          node.style.position = "absolute";
+          node.style.width = colWidth + "px";
+
+          var col = minColumn(cols);
+          var offsetTop = cols[col],
+              offsetLeft = col * (colWidth + padding);
+          cols[col] += node.offsetHeight;
+
+          // console.log(node, offsetTop, offsetLeft, colWidth);
+
+          node.style.top = offsetTop + "px";
+          node.style.left = offsetLeft + "px";
+        });
+      }
+    })();
+  </script>
+</polymer-element>

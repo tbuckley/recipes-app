@@ -1,15 +1,20 @@
 <!-- <link rel="import" href="../components/polymer-ui-scaffold/polymer-ui-scaffold.html"> -->
 <link rel="import" href="re-recipe.html">
+<link rel="import" href="re-waterfall-layout.html">
 
 <polymer-element name="re-recipes" attributes="fridge">
   <template>
     <link rel="stylesheet" href="css/re-recipes.css">
 
-    <re-search-request url="/api/recipes" query="{{query}}" results="{{recipes}}"></re-search-request>
+    <re-search-request url="/api/recipes" query="{{query}}" results="{{recipes}}">
+    </re-search-request>
 
-    <template repeat="{{recipe in recipes}}">
-      <re-recipe recipe="{{recipe}}" fridge="{{fridge}}"></re-recipe>
-    </template>
+    <div style="position: relative;">
+      <re-waterfall-layout id="waterfall" auto columns="{{2}}"></re-waterfall-layout>
+      <template repeat="{{recipe in recipes}}">
+        <re-recipe recipe="{{recipe}}" fridge="{{fridge}}"></re-recipe>
+      </template>
+    </div>
 
   </template>
   <script>
@@ -21,6 +26,23 @@
         },
         enteredView: function() {
           this.fridge.addEventListener("changed", this.searchRecipes.bind(this));
+
+          var waterfall = function() {
+            console.log("Re-laying out!");
+            this.$.waterfall.relayout();
+          }.bind(this);
+
+          var timer = null;
+
+          this.addEventListener("DOMSubtreeModified", function(e) {
+            //console.log(e);
+            if(e.target === this) {
+              if(timer) {
+                clearTimeout(timer);
+              }
+              timer = setTimeout(waterfall, 10);
+            }
+          }.bind(this));
         },
         searchRecipes: function() {
           var ids = this.fridge.ingredients.map(function(ingr) {
