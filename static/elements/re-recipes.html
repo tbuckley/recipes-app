@@ -2,7 +2,7 @@
 <link rel="import" href="re-recipe.html">
 <link rel="import" href="re-waterfall-layout.html">
 
-<polymer-element name="re-recipes" attributes="fridge">
+<polymer-element name="re-recipes" attributes="fridge recipes">
   <template>
     <link rel="stylesheet" href="css/re-recipes.css">
 
@@ -26,23 +26,6 @@
         },
         enteredView: function() {
           this.fridge.addEventListener("changed", this.searchRecipes.bind(this));
-
-          var waterfall = function() {
-            console.log("Re-laying out!");
-            this.$.waterfall.relayout();
-          }.bind(this);
-
-          var timer = null;
-
-          this.addEventListener("DOMSubtreeModified", function(e) {
-            //console.log(e);
-            if(e.target === this) {
-              if(timer) {
-                clearTimeout(timer);
-              }
-              timer = setTimeout(waterfall, 10);
-            }
-          }.bind(this));
         },
         searchRecipes: function() {
           var ids = this.fridge.ingredients.map(function(ingr) {
@@ -52,6 +35,27 @@
           this.query = {
             contains: ids
           };
+        },
+        recipesChanged: function() {
+          console.log("recipes changed");
+          // var waterfall = function() {
+          //   console.log("Re-laying out!");
+            this.async(function() {
+              this.$.waterfall.relayout();
+            }.bind(this));
+          // }.bind(this);
+
+          // var timer = null;
+
+          // window.addEventListener("DOMSubtreeModified", function(e) {
+          //   //console.log(e);
+          //   if(e.target === this) {
+          //     if(timer) {
+          //       clearTimeout(timer);
+          //     }
+          //     timer = setTimeout(waterfall, 10);
+          //   }
+          // }.bind(this));
         }
       });
     })();
